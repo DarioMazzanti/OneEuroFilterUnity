@@ -9,7 +9,7 @@ The 1€ filter is described in the [CHI 2012 paper] by [Géry Casiez]: a precis
 
 ## Content and Installation
 A test project named *OneEuroFilterUnity* is available. You can open it and run the *TestScene* scene to see the filter in action. The project was developed using Unity 5.3.4f1, but the utility itself is just a .cs file with no particular dependencies, so it should work for other Unity versions as well (previous and next, I guess).  
-> If you want to use the filter in your own projects (that's the idea, right?!) just copy the *OneEuroFilter.cs* file to your own Assets folder. 
+> If you want to use the filter in your own projects (that's the idea, right?!) just copy the [OneEuroFilter.cs] file to your own Assets folder. 
 
 ## Usage
 In the following example a noisy float and Vector3 are being filtered. The filtered Vector3 is used as the new position for a Transform:
@@ -127,3 +127,4 @@ This utility is developed and maintained by [Dario Mazzanti](https://www.iit.it/
 [CHI 2012 paper]: <http://www.lifl.fr/~casiez/publications/CHI2012-casiez.pdf>
 [online version]: <http://www.lifl.fr/~casiez/1euro/InteractiveDemo/>
 [Jonathan Aceituno]: <http://p.oin.name/>
+[OneEuroFilter.cs]: <https://github.com/DarioMazzanti/OneEuroFilterUnity/blob/master/Assets/Scripts/OneEuroFilter.cs>

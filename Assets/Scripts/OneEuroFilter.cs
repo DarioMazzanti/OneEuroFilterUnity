@@ -1,6 +1,6 @@
 ﻿/* 
  * OneEuroFilter.cs
- * Author: Dario Mazzanti (dario.mazzanti@iit.it)
+ * Author: Dario Mazzanti (dario.mazzanti@iit.it), 2016
  * 
  * This Unity C# utility is based on the C++ implementation of the OneEuroFilter algorithm by Nicolas Roussel (http://www.lifl.fr/~casiez/1euro/OneEuroFilter.cc)
  * More info on the 1€ filter by Géry Casiez at http://www.lifl.fr/~casiez/1euro/

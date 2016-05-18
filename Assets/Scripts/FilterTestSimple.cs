@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿/* 
+ * FilterTestSimple.cs
+ * Author: Dario Mazzanti (dario.mazzanti@iit.it), 2016
+ * 
+ * Testing OneEuroFilter utility
+ *
+ */
+
+
+using UnityEngine;
 using System.Collections;
 
 public class FilterTestSimple : MonoBehaviour 
