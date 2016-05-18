@@ -7,7 +7,6 @@
  *
  */
 
-
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -19,8 +18,11 @@ class LowPassFilter
 
 	public void setAlpha(float _alpha) 
 	{
-		if (_alpha<=0.0f || _alpha>1.0f) 
+		if (_alpha<=0.0f || _alpha>1.0f)
+		{
 			Debug.LogError("alpha should be in (0.0., 1.0]");
+			return;
+		}
 		a = _alpha;
 	}
 
@@ -76,6 +78,11 @@ class OneEuroFilter
 	LowPassFilter dx;
 	float lasttime;
 
+	// currValue contains the latest value which have been succesfully filtered
+	// prevValue contains the previous filtered value
+	public float currValue {get; protected set;}
+	public float prevValue {get; protected set;}
+
 	float alpha(float _cutoff) 
 	{
 		float te = 1.0f/freq;
@@ -85,14 +92,21 @@ class OneEuroFilter
 
 	void setFrequency(float _f) 
 	{
-		if (_f<=0.0f) 
+		if (_f<=0.0f)
+		{
 			Debug.LogError("freq should be > 0");
+			return;
+		}
 		freq = _f;
 	}
 
 	void setMinCutoff(float _mc) 
 	{
-		if (_mc<=0.0f) Debug.LogError("mincutoff should be > 0");
+		if (_mc<=0.0f)
+		{
+			Debug.LogError("mincutoff should be > 0");
+			return;
+		}
 		mincutoff = _mc;
 	}
 
@@ -103,8 +117,11 @@ class OneEuroFilter
 
 	void setDerivateCutoff(float _dc) 
 	{
-		if (_dc<=0.0f) 
+		if (_dc<=0.0f)
+		{
 			Debug.LogError("dcutoff should be > 0");
+			return;
+		}
 		dcutoff = _dc;
 	}
 
@@ -117,6 +134,9 @@ class OneEuroFilter
 		x = new LowPassFilter(alpha(mincutoff));
 		dx = new LowPassFilter(alpha(dcutoff));
 		lasttime = -1.0f;
+
+		currValue = 0.0f;
+		prevValue = currValue;
 	}
 
 	public void UpdateParams(float _freq, float _mincutoff, float _beta, float _dcutoff)
@@ -131,17 +151,21 @@ class OneEuroFilter
 
 	public float Filter(float value, float timestamp = -1.0f) 
 	{
+		prevValue = currValue;
+		
 		// update the sampling frequency based on timestamps
 		if (lasttime!=-1.0f && timestamp != -1.0f)
 			freq = 1.0f/(timestamp-lasttime);
 		lasttime = timestamp;
 		// estimate the current variation per second 
-		float dvalue = x.hasLastRawValue() ? (value - x.lastRawValue())*freq : 0.0f; // FIXME: 0.0 or value?
+		float dvalue = x.hasLastRawValue() ? (value - x.lastRawValue())*freq : 0.0f; // FIXME: 0.0 or value? 
 		float edvalue = dx.filterWithAlpha(dvalue, alpha(dcutoff));
 		// use it to update the cutoff frequency
 		float cutoff = mincutoff + beta*Mathf.Abs(edvalue);
 		// filter the given value
-		return x.filterWithAlpha(value, alpha(cutoff));
+		currValue = x.filterWithAlpha(value, alpha(cutoff));
+
+		return currValue;
 	}
 } ;
 	
@@ -154,10 +178,16 @@ public class OneEuroFilter<T> where T : struct
 	// the array of filters
 	OneEuroFilter[] oneEuroFilters;
 
+	// filter parameters
+	public float freq {get; protected set;}
+	public float mincutoff {get; protected set;}
+	public float beta {get; protected set;}
+	public float dcutoff {get; protected set;}
+
 	// currValue contains the latest value which have been succesfully filtered
 	// prevValue contains the previous filtered value
-	T currValue;
-	T prevValue;
+	public T currValue {get; protected set;}
+	public T prevValue {get; protected set;}
 
 	// initialization of our filter(s)
 	public OneEuroFilter(float _freq, float _mincutoff = 1.0f, float _beta = 0.0f, float _dcutoff = 1.0f)
@@ -165,6 +195,11 @@ public class OneEuroFilter<T> where T : struct
 		type = typeof(T);
 		currValue = new T();
 		prevValue = new T();
+
+		freq = _freq;
+		mincutoff = _mincutoff;
+		beta = _beta;
+		dcutoff = _dcutoff;
 
 		if(type == typeof(Vector2))
 			oneEuroFilters = new OneEuroFilter[2];
@@ -181,29 +216,31 @@ public class OneEuroFilter<T> where T : struct
 		}
 
 		for(int i = 0; i < oneEuroFilters.Length; i++)
-		{
-			oneEuroFilters[i] = new OneEuroFilter(_freq, _mincutoff, _beta, _dcutoff);
-		}
+			oneEuroFilters[i] = new OneEuroFilter(freq, mincutoff, beta, dcutoff);		
 	}
 
 	// updates the filter parameters
 	public void UpdateParams(float _freq, float _mincutoff = 1.0f, float _beta = 0.0f, float _dcutoff = 1.0f)
 	{
+		freq = _freq;
+		mincutoff = _mincutoff;
+		beta = _beta;
+		dcutoff = _dcutoff;
+		
 		for(int i = 0; i < oneEuroFilters.Length; i++)
-			oneEuroFilters[i].UpdateParams(_freq, _mincutoff, _beta, _dcutoff);
+			oneEuroFilters[i].UpdateParams(freq, mincutoff, beta, dcutoff);
 	}
 
 
 	// filters the provided _value and returns the result.
 	// Note: a timestamp can also be provided - will override filter frequency.
-	// this declaration generates a warning due to delegates, but we don't care :)
-	public T Filter<T>(T _value, float timestamp = -1.0f) where T : struct
+	public T Filter<U>(U _value, float timestamp = -1.0f) where U : struct
 	{
 		prevValue = currValue;
 		
-		if(typeof(T) != type)
+		if(typeof(U) != type)
 		{
-			Debug.LogError("WARNING! " + typeof(T) + " when " + type + " is expected!\nReturning previous filtered value" );
+			Debug.LogError("WARNING! " + typeof(U) + " when " + type + " is expected!\nReturning previous filtered value" );
 			currValue = prevValue;
 	
 			return (T) Convert.ChangeType(currValue, typeof(T));
