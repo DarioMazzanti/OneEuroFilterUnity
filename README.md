@@ -5,7 +5,7 @@
 *This utility was written to allow the easy filtering of some Unity data types, such as Vector2, Vector3, Vector3 and Quaternion...and of course float. It is not particularly polished: advices and suggestions are welcome! :)*
 
 ## About
-The 1€ filter is described in the [CHI 2012 paper] by [Géry Casiez]: a precise and responsive algorithm for filtering noisy signals, particularly suited for interactive systems. A really nice [online version] by [Jonathan Aceituno] is available to try.
+The 1€ filter is described in the [CHI 2012 paper] by [Géry Casiez], [Nicolas Roussel] and [Daniel Vogel]: a precise and responsive algorithm for filtering noisy signals, particularly suited for interactive systems. A really nice [online version] by [Jonathan Aceituno] is available to try.
 
 ## Content and Installation
 A test project named *OneEuroFilterUnity* is available. The project contains two scenes:
