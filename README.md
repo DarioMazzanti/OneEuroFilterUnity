@@ -1,6 +1,6 @@
 # OneEuroFilter utility for Unity (beta)
 
-*OneEuroFilter for Unity* is a simple utility for filtering noisy signals, built upon the [OneEuroFilter] by [Géry Casiez]. It is rewritten as a C# class for [Unity], starting from the [C++ implementation] by [Nicolas Roussel]. 
+*OneEuroFilter for Unity* is a simple utility for filtering noisy signals, built upon the [OneEuroFilter] by [Géry Casiez], [Nicolas Roussel] and [Daniel Vogel]. It is rewritten as a C# class for [Unity], starting from the [C++ implementation] by [Nicolas Roussel]. 
 
 *This utility was written to allow the easy filtering of some Unity data types, such as Vector2, Vector3, Vector3 and Quaternion...and of course float. It is not particularly polished: advices and suggestions are welcome! :)*
 
@@ -13,7 +13,7 @@ A test project named *OneEuroFilterUnity* is available. The project contains two
 - **TestScene0**: random noise is applied to the position (Vector3 type) of a cube floating along its vertical axis.
 - **TestScene1**: random noise is applied to the rotation (Quaternion type) of a rotating cube.
 
-The *OneEuroFilteringTest* objects existing in both scenes allows you to turn the 1€ filter on/off, to change its parameters and to set the amount of random noise applied to the cube on the left of the scene. You can see the result of the filtering applied to the cube on the right. The project was developed using Unity 5.3.4f1, but the utility itself is just a .cs file with no particular dependencies, so it should work for other Unity versions as well (previous and next, I guess).  
+The *OneEuroFilteringTest* object existing in both scenes allows you to turn the 1€ filter on/off, to change its parameters and to set the amount of random noise applied to the cube on the left of the scene. You can see the result of the filtering applied to the cube on the right. The project was developed using Unity 5.3.4f1, but the utility itself is just a .cs file with no external dependencies, so it should work for other Unity versions as well (previous and next, I guess).  
 > If you want to use the filter in your own projects (that's the idea, right?!) just copy the [OneEuroFilter.cs] file to your own Assets folder. 
 
 ## Usage
@@ -118,7 +118,7 @@ The OneEuroFilter is available in many programming languages and within a number
   
 ___
 This utility is developed and maintained by [Dario Mazzanti](https://www.iit.it/people/dario-mazzanti).  
-*This README file was last updated on 2016-05-20 by Dario Mazzanti.*
+*This README file was last updated on 2016-05-24 by Dario Mazzanti.*
 
 
 
@@ -126,6 +126,7 @@ This utility is developed and maintained by [Dario Mazzanti](https://www.iit.it/
 
 [OneEuroFilter]: <http://www.lifl.fr/~casiez/1euro/>
 [Géry Casiez]: <http://cristal.univ-lille.fr/~casiez/>
+[Daniel Vogel]: <http://www.nonsequitoria.com/>
 [Unity]: <https://unity3d.com/>
 [C++ implementation]: <http://www.lifl.fr/~casiez/1euro/OneEuroFilter.cc>
 [Nicolas Roussel]: <http://interaction.lille.inria.fr/~roussel/>
