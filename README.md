@@ -1,4 +1,4 @@
-# OneEuroFilter utility for Unity (beta)
+# One Euro Filter utility for Unity (beta)
 
 *OneEuroFilter for Unity* is a simple utility for filtering noisy signals, built upon the [OneEuroFilter] by [Géry Casiez], [Nicolas Roussel] and [Daniel Vogel]. It is rewritten as a C# class for [Unity], starting from the [C++ implementation] by [Nicolas Roussel]. 
 
