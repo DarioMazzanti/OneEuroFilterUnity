@@ -2,7 +2,7 @@
 
 *OneEuroFilter for Unity* is a simple utility for filtering noisy signals, built upon the [OneEuroFilter] by [Géry Casiez], [Nicolas Roussel] and [Daniel Vogel]. It is rewritten as a C# class for [Unity], starting from the [C++ implementation] by [Nicolas Roussel]. 
 
-*This utility was written to allow the easy filtering of some Unity data types, such as Vector2, Vector3, Vector3 and Quaternion...and of course float. It is not particularly polished: advices and suggestions are welcome! :)*
+*This utility was written to allow the easy filtering of some Unity data types, such as Vector2, Vector3, Vector3 and Quaternion...and of course float. It is not particularly polished: suggestions are welcome! :)*
 
 ## About
 The 1€ filter is described in the [CHI 2012 paper] by [Géry Casiez], [Nicolas Roussel] and [Daniel Vogel]: a precise and responsive algorithm for filtering noisy signals, particularly suited for interactive systems. A really nice [online version] by [Jonathan Aceituno] is available to try.
