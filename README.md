@@ -7,6 +7,9 @@
 ## About
 The 1€ filter is described in the [CHI 2012 paper] by [Géry Casiez], [Nicolas Roussel] and [Daniel Vogel]: a precise and responsive algorithm for filtering noisy signals, particularly suited for interactive systems. A really nice [online version] by [Jonathan Aceituno] is available to try.
 
+## Acknowledgements
+Thanks to [marcbal] for the contribution to Quaternion filtering for non-continuous input Quaternions!
+
 ## Content and Installation
 A test project named *OneEuroFilterUnity* is available. The project contains two scenes:
 
@@ -134,3 +137,4 @@ This utility is developed and maintained by [Dario Mazzanti](https://www.iit.it/
 [online version]: <http://www.lifl.fr/~casiez/1euro/InteractiveDemo/>
 [Jonathan Aceituno]: <http://p.oin.name/>
 [OneEuroFilter.cs]: <https://github.com/DarioMazzanti/OneEuroFilterUnity/blob/master/Assets/Scripts/OneEuroFilter.cs>
+[marcbal]: <https://github.com/marcbal>
