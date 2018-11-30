@@ -58,8 +58,14 @@ public class FilterTestQuaternion : MonoBehaviour
 		}
 		else
 			filteredTransform.rotation = noisyTransform.rotation;
-	
-	}
+
+    }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(new Vector3(noisyTransform.rotation.x, noisyTransform.rotation.y, noisyTransform.rotation.z) * 5 + Vector3.up * 5, 0.1f);
+    //    Gizmos.DrawSphere(new Vector3(noisyTransform.rotation.w, 0, 0) * 5 + Vector3.up * 5, 0.1f);
+    //}
 
 
 	Quaternion PerturbedRotation(Quaternion _rotation)

@@ -283,6 +283,16 @@ public class OneEuroFilter<T> where T : struct
 		{
 			Quaternion output = Quaternion.identity;
 			Quaternion input = (Quaternion) Convert.ChangeType(_value, typeof(Quaternion));
+            
+            // Workaround that take into account that some input device sends
+            // quaternion that represent only a half of all possible values.
+            // this piece of code does not affect normal behaviour (when the
+            // input use the full range of possible values).
+            if (Vector4.SqrMagnitude(new Vector4(oneEuroFilters[0].currValue, oneEuroFilters[1].currValue, oneEuroFilters[2].currValue, oneEuroFilters[3].currValue).normalized
+                - new Vector4(input[0], input[1], input[2], input[3]).normalized) > 2)
+            {
+                input = new Quaternion(-input.x, -input.y, -input.z, -input.w);
+            }
 
 			for(int i = 0; i < oneEuroFilters.Length; i++)
 				output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
