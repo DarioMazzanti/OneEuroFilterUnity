@@ -139,7 +139,7 @@ public class OneEuroFilter
 		prevValue = currValue;
 	}
 
-	public void UpdateParams(float _freq, float _mincutoff, float _beta, float _dcutoff)
+	public void UpdateParams(float _freq, float _mincutoff = 1.0f, float _beta = 0.0f, float _dcutoff = 1.0f)
 	{
 		setFrequency(_freq);
 		setMinCutoff(_mincutoff);
