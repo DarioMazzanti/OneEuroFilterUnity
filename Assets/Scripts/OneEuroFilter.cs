@@ -68,7 +68,7 @@ class LowPassFilter
 
 // -----------------------------------------------------------------
 
-class OneEuroFilter 
+public class OneEuroFilter 
 {
 	float freq;
 	float mincutoff;
