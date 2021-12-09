@@ -232,74 +232,113 @@ public class OneEuroFilter<T> where T : struct
 	}
 
 
-	// filters the provided _value and returns the result.
+	// filters the provided _value and returns the result for Vector2 type.
 	// Note: a timestamp can also be provided - will override filter frequency.
-	public T Filter<U>(U _value, float timestamp = -1.0f) where U : struct
+	public T Filter(Vector2 _value, float timestamp = -1.0f)
 	{
 		prevValue = currValue;
-		
-		if(typeof(U) != type)
+
+		if (type != typeof(Vector2))
 		{
-			Debug.LogError("WARNING! " + typeof(U) + " when " + type + " is expected!\nReturning previous filtered value" );
+			Debug.LogError("WARNING! " + typeof(Vector2) + " when " + type + " is expected!\nReturning previous filtered value");
 			currValue = prevValue;
-	
-			return (T) Convert.ChangeType(currValue, typeof(T));
+
+			return (T)Convert.ChangeType(currValue, typeof(T));
 		}
 
-		if(type == typeof(Vector2))
+		Vector2 output = Vector2.zero;
+		Vector2 input = (Vector2)Convert.ChangeType(_value, typeof(Vector2));
+
+		for (int i = 0; i < oneEuroFilters.Length; i++)
+			output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
+
+		currValue = (T)Convert.ChangeType(output, typeof(T));
+
+		return (T)Convert.ChangeType(currValue, typeof(T));
+	}
+
+	// filters the provided _value and returns the result for Vector3 type.
+	// Note: a timestamp can also be provided - will override filter frequency.
+	public T Filter(Vector3 _value, float timestamp = -1.0f)
+	{
+		prevValue = currValue;
+
+		if (type != typeof(Vector3))
 		{
-			Vector2 output = Vector2.zero;
-			Vector2 input = (Vector2) Convert.ChangeType(_value, typeof(Vector2));
+			Debug.LogError("WARNING! " + typeof(Vector3) + " when " + type + " is expected!\nReturning previous filtered value");
+			currValue = prevValue;
 
-			for(int i = 0; i < oneEuroFilters.Length; i++)
-				output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
-
-			currValue = (T) Convert.ChangeType(output, typeof(T));
+			return (T)Convert.ChangeType(currValue, typeof(T));
 		}
 
-		else if(type == typeof(Vector3))
+		Vector3 output = Vector3.zero;
+		Vector3 input = (Vector3)Convert.ChangeType(_value, typeof(Vector3));
+
+		for (int i = 0; i < oneEuroFilters.Length; i++)
+			output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
+
+		currValue = (T)Convert.ChangeType(output, typeof(T));
+
+		return (T)Convert.ChangeType(currValue, typeof(T));
+	}
+
+	// filters the provided _value and returns the result for Vector4 type.
+	// Note: a timestamp can also be provided - will override filter frequency.
+	public T Filter(Vector4 _value, float timestamp = -1.0f)
+	{
+		prevValue = currValue;
+
+		if (type != typeof(Vector4))
 		{
-			Vector3 output = Vector3.zero;
-			Vector3 input = (Vector3) Convert.ChangeType(_value, typeof(Vector3));
+			Debug.LogError("WARNING! " + typeof(Vector4) + " when " + type + " is expected!\nReturning previous filtered value");
+			currValue = prevValue;
 
-			for(int i = 0; i < oneEuroFilters.Length; i++)
-				output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
-
-			currValue = (T) Convert.ChangeType(output, typeof(T));
+			return (T)Convert.ChangeType(currValue, typeof(T));
 		}
 
-		else if(type == typeof(Vector4))
+		Vector4 output = Vector4.zero;
+		Vector4 input = (Vector4)Convert.ChangeType(_value, typeof(Vector4));
+
+		for (int i = 0; i < oneEuroFilters.Length; i++)
+			output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
+
+		currValue = (T)Convert.ChangeType(output, typeof(T));
+
+		return (T)Convert.ChangeType(currValue, typeof(T));
+	}
+
+	// filters the provided _value and returns the result for Quaternion type.
+	// Note: a timestamp can also be provided - will override filter frequency.
+	public T Filter(Quaternion _value, float timestamp = -1.0f)
+	{
+		prevValue = currValue;
+
+		if (type != typeof(Quaternion))
 		{
-			Vector4 output = Vector4.zero;
-			Vector4 input = (Vector4) Convert.ChangeType(_value, typeof(Vector4));
+			Debug.LogError("WARNING! " + typeof(Quaternion) + " when " + type + " is expected!\nReturning previous filtered value");
+			currValue = prevValue;
 
-			for(int i = 0; i < oneEuroFilters.Length; i++)
-				output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
-
-			currValue = (T) Convert.ChangeType(output, typeof(T));
+			return (T)Convert.ChangeType(currValue, typeof(T));
 		}
 
-		else
+		Quaternion output = Quaternion.identity;
+		Quaternion input = (Quaternion)Convert.ChangeType(_value, typeof(Quaternion));
+
+		// Workaround that take into account that some input device sends
+		// quaternion that represent only a half of all possible values.
+		// this piece of code does not affect normal behaviour (when the
+		// input use the full range of possible values).
+		if (Vector4.SqrMagnitude(new Vector4(oneEuroFilters[0].currValue, oneEuroFilters[1].currValue, oneEuroFilters[2].currValue, oneEuroFilters[3].currValue).normalized
+			- new Vector4(input[0], input[1], input[2], input[3]).normalized) > 2)
 		{
-			Quaternion output = Quaternion.identity;
-			Quaternion input = (Quaternion) Convert.ChangeType(_value, typeof(Quaternion));
-            
-            // Workaround that take into account that some input device sends
-            // quaternion that represent only a half of all possible values.
-            // this piece of code does not affect normal behaviour (when the
-            // input use the full range of possible values).
-            if (Vector4.SqrMagnitude(new Vector4(oneEuroFilters[0].currValue, oneEuroFilters[1].currValue, oneEuroFilters[2].currValue, oneEuroFilters[3].currValue).normalized
-                - new Vector4(input[0], input[1], input[2], input[3]).normalized) > 2)
-            {
-                input = new Quaternion(-input.x, -input.y, -input.z, -input.w);
-            }
-
-			for(int i = 0; i < oneEuroFilters.Length; i++)
-				output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
-
-			currValue = (T) Convert.ChangeType(output, typeof(T));
+			input = new Quaternion(-input.x, -input.y, -input.z, -input.w);
 		}
 
-		return (T) Convert.ChangeType(currValue, typeof(T));
+		for (int i = 0; i < oneEuroFilters.Length; i++)
+			output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
+
+		currValue = (T)Convert.ChangeType(output, typeof(T));
+
+		return (T)Convert.ChangeType(currValue, typeof(T));
 	}
 }
