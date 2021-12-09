@@ -247,7 +247,7 @@ public class OneEuroFilter<T> where T : struct
 		}
 
 		Vector2 output = Vector2.zero;
-		Vector2 input = (Vector2)Convert.ChangeType(_value, typeof(Vector2));
+		Vector2 input = _value;
 
 		for (int i = 0; i < oneEuroFilters.Length; i++)
 			output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
@@ -272,7 +272,7 @@ public class OneEuroFilter<T> where T : struct
 		}
 
 		Vector3 output = Vector3.zero;
-		Vector3 input = (Vector3)Convert.ChangeType(_value, typeof(Vector3));
+		Vector3 input = _value;
 
 		for (int i = 0; i < oneEuroFilters.Length; i++)
 			output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
@@ -297,7 +297,7 @@ public class OneEuroFilter<T> where T : struct
 		}
 
 		Vector4 output = Vector4.zero;
-		Vector4 input = (Vector4)Convert.ChangeType(_value, typeof(Vector4));
+		Vector4 input = _value;
 
 		for (int i = 0; i < oneEuroFilters.Length; i++)
 			output[i] = oneEuroFilters[i].Filter(input[i], timestamp);
@@ -322,7 +322,7 @@ public class OneEuroFilter<T> where T : struct
 		}
 
 		Quaternion output = Quaternion.identity;
-		Quaternion input = (Quaternion)Convert.ChangeType(_value, typeof(Quaternion));
+		Quaternion input = _value;
 
 		// Workaround that take into account that some input device sends
 		// quaternion that represent only a half of all possible values.
